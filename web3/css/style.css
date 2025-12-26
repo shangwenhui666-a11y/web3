@@ -1,0 +1,262 @@
+@charset "utf-8";
+/* CSS Document */
+
+ul,
+li {
+	list-style: none;
+	margin: 0;
+	padding: 0
+}
+
+del,
+ins,
+u,
+s,
+a,
+a:hover,
+a:active,
+a:link,
+a:visited {
+	text-decoration: none !important;
+}
+
+body,
+textarea,
+input,
+button,
+select,
+keygen,
+legend {
+	font-size: 14px;
+	font-family: "微软雅黑";
+	outline: 0;
+}
+
+.clearfix {
+	clear: both;
+	
+}
+
+body {
+	overflow-x: hidden;
+	background-color: #F5F5F5;
+}
+
+img {
+	max-width: 100%
+}
+
+.search {
+	margin-top: 10px;
+}
+
+a {}
+
+a:hover {
+	color: #cd3333
+}
+
+.Footer-wrapper {
+	background-color: #31708F;
+	margin-top: 20px;
+	text-align: center;
+	padding: 40px 0; color:#fff;
+}
+
+.menu li {
+	float: left;
+
+	font-size: 18px; font-weight:bold;
+	padding: 15px 0px;
+	text-align: center;
+	width: 16.66%;
+	
+}
+.menu li a{
+	color: #fff;
+	}
+	.menu{	background-color: #31708F;}
+.top {
+	background-color: #fff;
+}
+
+.swiper-container {
+	max-width: 1200px;
+	overflow: hidden;
+	margin: 0 auto;
+	clear: both;
+	
+}
+
+.swiper-container img {
+	width: 100%;
+	height: 400px;
+	object-fit: cover;
+}
+
+.section>div:nth-child(1) {
+
+}
+
+.section>div:nth-child(2) {
+	background: #cccccc
+}
+
+.section>div:nth-child(3) {
+	background: #ccc
+}
+
+.hh {
+	min-height: 220px
+}
+
+.imgs {
+	
+}
+.hh ul{ padding-bottom:30px}
+.hh li{ font-size:16px;  }
+.hh li a{ padding:10px;background:rgba(255,255,255,0.5); display:block; margin:10px}
+.cp {
+	margin-top: 20px
+}
+
+.cp img {
+  
+    height: 170px;
+    width: 100%;
+    height: 300px;
+	object-fit: cover;
+}
+.cp p{ color:#000; margin-top:10px; font-size:16px; }
+.name h2 {
+	font-weight: bold;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	padding-top:10px;
+	font-size:24px;
+}
+
+.news-list {
+	padding: 0 8px;
+	text-align: right;
+}
+
+.news-list ul.left-ul {
+	float: left;
+	width: 50%;
+	text-align: left;
+}
+
+.news-list ul.left-ul li {
+	position: relative;
+}
+
+.news-list ul.left-ul li:after {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	border-bottom: 1px dashed #e6e6e6;
+	display: block;
+	clear: both;
+	overflow: hidden;
+	width: 200%;
+	content: "";
+}
+
+.news-list ul.left-ul li:last-child:after {
+	border: 0;
+}
+
+.news-list ul.left-ul li a {
+	display: block;
+	width: 100%;
+}
+
+.news-list .auto-ul {
+	width: 53px;
+	text-align: center;
+	float: right;
+}
+
+.news-list .right-ul {
+	float: right;
+}
+
+.news-list {
+	line-height: 24px
+}
+
+.news-list .right-ul li a {
+	display: inline-block;
+	max-width: 110px;
+	color: #00a236;
+}
+
+.news-list .right-ul li a i {
+	font-size: 12px;
+	color: #00a236;
+}
+
+.msg div {
+	margin-top: 10px
+}
+
+.xw_list li { margin-top:10px
+}
+.xw_list li>span{ display:block; background:#fff; padding:20px}
+/* .weizhi {
+	border: #FF9900 solid 1px;
+} */
+.weizhi{
+	font-size: 24px;
+	padding: 10px 0;
+}
+.newstitle {
+	text-align: center
+}
+
+.newstitle h1 {
+	font-size: 24px;
+	margin: 40px; font-weight:bold;
+	padding: 20px
+}
+.cp span{
+	display: block;
+	padding-bottom: 20px;
+	font-size: 22px; color:red
+}
+.cp span i{
+	font-style: normal;
+	color: #ff0000;
+	font-size: 20px;
+}
+.content{ line-height:24px}
+ @media only screen and (max-width:768px) {
+ body{ padding-top:50px}
+ .top{ position:fixed; left:0; z-index:555; width:100%; top:0}
+.mes{ border-bottom:#333 solid 2px; height:30px; width:35px; position:absolute; right:20px; top:0px}
+.mes:before{ border-bottom:#333 solid 2px; width:35px; content:'';display:block; position:relative; top:5px;}
+.mes:after{ border-bottom:#333 solid 2px; width:35px;content:''; display:block; position:relative; top:14px;}
+.menu{ height:calc(100% - 50px); top:50px; left:0; width:100%; z-index:555; position:fixed; display:none}
+.tdiv .menu{ display:block}
+.menu li{ width:100%}
+	.logo{
+		width: 120px;
+		height: 50px;
+	}
+	.logo img{
+		width: 100%;
+		height: 100%;
+	}
+	.swiper-container img {
+	    max-width: 100%;
+	    height: 170px;
+	    object-fit: cover;
+	}
+	.cp img {
+	    width: 100%;
+	    height: 170px;
+		object-fit: cover;
+	}
+	.row{ margin:0 }
+}

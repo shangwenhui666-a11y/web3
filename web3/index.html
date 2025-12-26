@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>服装商城</title>
+<link rel="stylesheet" href="css/swiper.min.css">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+/* 新增样式 */
+.banner-tip {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.8);
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.cp-item {
+    transition: transform 0.3s;
+}
+.cp-item:hover {
+    transform: translateY(-5px);
+}
+.news-date {
+    color: #999;
+    font-size: 12px;
+    margin-left: 10px;
+}
+.hot-tag {
+    display: inline-block;
+    background: #ff4444;
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+.service-bar {
+    background: #f8f8f8;
+    padding: 20px 0;
+    margin: 20px 0;
+}
+.service-item {
+    text-align: center;
+    padding: 10px 0;
+}
+.service-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #337ab7;
+}
+</style>
+</head>
+<body>
+<!--头部-->
+<header class="top">
+  <div class="container">
+ 
+    <div class="user-actions pull-right hidden-xs" style="margin-top:20px;">
+      <a href="denglu.html" class="mr-3">登录</a>
+      <a href="reg.html">注册</a>
+    </div>
+  </div>
+  <div class="search pull-right mes" onclick="op(this)">
+    <input type="text" placeholder="搜索商品..." style="display:none; padding:5px; margin-top:10px;">
+  </div>
+  <div class="menu clearfix">
+    <ul class="container">
+      <li class="first"><a href="index.html" target="_self">首页</a></li>
+      <li><a href="news.html" target="_self">在线新闻</a></li>
+      <li><a href="guonei.html" target="_self">漂亮女装</a></li>
+      <li><a href="jinkou.html" target="_self">帅气男装</a></li>
+      <li><a href="remai.html" target="_self">潮流服装</a></li>
+      <li><a href="reg.html" target="_self">注册</a></li>
+    </ul>
+  </div>
+</header>
+<script>
+function op(ele) {
+  const input = ele.querySelector('input');
+  input.style.display = input.style.display === 'none' ? 'block' : 'none';
+  if (input.style.display === 'block') input.focus();
+}
+</script>
+<div class="clearfix"></div>
+<!--头部-结束-->
+
+<!--轮播图区域-->
+<div class="swiper-container" style="width:100%;">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img src="images/a.jpg" width="100%" alt="夏季新品连衣裙系列"></div>
+    <div class="swiper-slide"><img src="images/b.jpg" width="100%" alt="男士休闲西装特惠"></div>
+    <div class="swiper-slide"><img src="images/c.jpg" width="100%" alt="情侣装限定款"></div>
+  </div>
+  <!-- 轮播控制按钮 -->
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+<link rel="stylesheet" href="css/swiper.min.css">
+<script src="js/swiper.min.js"></script>
+<script>
+  // 初始化轮播（修复切换过快问题）
+  const mySwiper = new Swiper('.swiper-container', {
+    loop: true, // 循环播放
+    speed: 1500, // 核心：设置切换动画速度（单位：毫秒），500是常规舒适速度
+    autoplay: {
+      delay: 8000, // 每张图停留3秒（核心：确认delay数值，3000=3秒）
+      disableOnInteraction: false, // 关键：点击切换后仍保持自动播放（默认true会停止）
+      waitForTransition: true, // 等待切换动画完成后再计时，避免叠加过快
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true, // 点击指示器切换
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>
+<div class="clearfix"></div>
+
+<!--服务保障区-->
+<div class="service-bar">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3 service-item">
+        <div class="service-icon">✏️</div>
+        <div>原创设计理念</div>
+      </div>
+      <div class="col-sm-3 service-item">
+        <div class="service-icon">🌿</div>
+        <div>精选优质面料</div>
+      </div>
+      <div class="col-sm-3 service-item">
+        <div class="service-icon">👔</div>
+        <div>多样风格搭配</div>
+      </div>
+      <div class="col-sm-3 service-item">
+        <div class="service-icon">🏷️</div>
+        <div>品牌故事探索</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--产品展示区-->
+<div class="section container">
+  <div class="imgs">
+    <div class="text-center name">
+      <h2 class="fontsize3">精选产品</h2>
+      <div><span></span></div>
+    </div>
+    <div class="cp row text-center">
+      <div class="col-sm-3 col-xs-6 cp-item"><a href="info.html">
+        <img src="images/cp1.jpg" class="img-responsive">
+        <p>精品潮流服装</p>
+        <span class="text-danger">¥129</span></a>
+      </div>
+      <div class="col-sm-3 col-xs-6 cp-item"><a href="info.html">
+        <img src="images/cp2.jpg" class="img-responsive">
+        <p>精品潮流服装</p>
+        <span class="text-danger">¥159</span></a>
+      </div>
+      <div class="col-sm-3 col-xs-6 cp-item"><a href="info.html">
+        <img src="images/cp3.jpg" class="img-responsive">
+        <p>精品潮流服装</p>
+        <span class="text-danger">¥99</span></a>
+      </div>
+      <div class="col-sm-3 col-xs-6 cp-item"><a href="info.html">
+        <img src="images/cp4.jpg" class="img-responsive">
+        <p>精品潮流服装</p>
+        <span class="text-danger">¥199</span></a>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="remai.html" class="btn btn-default">查看更多</a>
+    </div>
+    <div class="hei30"></div>
+  </div>
+
+<div class="section container">
+  <div class="imgs">
+    <div class="text-center name">
+      <h2 class="fontsize3">产品图片</h2>
+      <div><span></span></div>
+    </div>
+    <div class="cp row text-center">
+      <div class="col-sm-3 col-xs-6"><a href="info.html"><img src="images/cp1.jpg">
+        <p>精品潮流服装</p>
+        </a> </div>
+      <div class="col-sm-3 col-xs-6"><a href="info.html"><img src="images/cp2.jpg">
+        <p>精品潮流服装</p>
+        </a> </div>
+      <div class="col-sm-3 col-xs-6"><a href="info.html"><img src="images/cp3.jpg">
+        <p>精品潮流服装</p>
+        </a> </div>
+      <div class="col-sm-3 col-xs-6"><a href="info.html"><img src="images/cp4.jpg">
+        <p>精品潮流服装</p>
+        </a> </div>
+      <div class="col-sm-3 col-xs-6"><a href="info.html"><img src="images/cp5.jpg">
+        <p>精品潮流服装</p>
+        </a> </div>
+      <div class="col-sm-3 col-xs-6"><a href="info.html"><img src="images/cp6.jpg">
+        <p>精品潮流服装</p>
+        </a> </div>
+      <div class="col-sm-3 col-xs-6"><a href="info.html"><img src="images/cp7.jpg">
+        <p>精品潮流服装</p>
+        </a> </div>
+      <div class="col-sm-3 col-xs-6"><a href="info.html"><img src="images/cp8.jpg">
+        <p>精品潮流服装</p>
+        </a> </div>
+    </div>
+    <div class="hei30"></div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="hh">
+    <div class="text-center name">
+      <h2 class="fontsize3">新闻资讯</h2>
+      <div><span></span></div>
+    </div>
+    <div class="">
+      <div class="pad10">
+        <div>
+          <div>
+            <ul class="clearfix">
+              <li class="col-sm-6"><a href="newsinfo.html">风从柯桥来｜疫情下，家居服需求激增</a></li>
+              <li class="col-sm-6"><a href="newsinfo.html">春夏女装面料解析（一）</a></li>
+              <li class="col-sm-6"><a href="newsinfo.html">腿粗可以穿靴子吗？</a></li>
+              <li class="col-sm-6"><a href="newsinfo.html">pick西装外套，显瘦有型百搭款</a></li>
+              <li class="col-sm-6"><a href="newsinfo.html">耐克 Nike Offline 凉拖鞋全新配色登陆</a></li>
+              <li class="col-sm-6"><a href="newsinfo.html">新春单品｜走亲访友 羊羔毛外套推荐</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hei30"></div>
+  </div>
+</div>
+
+<!--页脚-->
+<footer class="Footer-wrapper">
+  <div class="container">
+    <div class="fcr text-center">
+      <p>© 2023 服装商城 版权所有</p>
+      <p>联系电话：400-123-4567</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>潮流服装 - 时尚单品</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+.hot-title {
+  position: relative;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f5f5f5;
+}
+.hot-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 80px;
+  height: 2px;
+  background-color: #d9534f;
+}
+.product-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+.hot-item {
+  flex: 1 1 200px;
+  padding: 0 10px;
+  margin-bottom: 25px;
+  min-width: 200px;
+}
+.hot-item a {
+  display: block;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all .3s;
+  text-decoration: none; /* 移除链接下划线 */
+}
+.hot-item a:hover {
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.hot-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+.hot-info {
+  padding: 12px;
+}
+.hot-name {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+.hot-price {
+  color: #d9534f;
+  font-weight: bold;
+  font-size: 18px;
+}
+.discount-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e53935;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.item-wrap {
+  position: relative;
+  display: block; /* 确保标签定位生效 */
+}
+/* 分页按钮禁用样式 */
+.pagination .disabled a {
+  color: #999;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+}
+</style>
+</head>
+<body>
+<!--头部-->
+<header class="top">
+  <div class="container">
+    <div class="search pull-right mes" onclick="op(this)"></div>
+  </div>
+  <div class="menu clearfix">
+    <ul class="container ">
+      <li class=" first"><a href="index.html" target="_self">首页</a></li>
+      <li><a href="news.html" target="_self">在线新闻</a></li>
+      <li class=""><a class="noborder " href="guonei.html" target="_self">漂亮女装</a></li>
+      <li class=""><a class="noborder " href="jinkou.html" target="_self">帅气男装</a></li>
+      <li class="active"><a class="noborder " href="remai.html" target="_self">潮流服装</a></li>
+      <li class=""><a class="noborder " href="reg.html" target="_self">注册</a></li>
+    </ul>
+  </div>
+</header>
+<script>
+function op(ele){
+  var pDiv=ele.parentNode;
+  if(pDiv.classList.contains("tdiv")){
+    pDiv.classList.remove("tdiv");
+  }else{
+    pDiv.classList.add("tdiv");
+  }
+}
+</script>
+<div class="clearfix"></div>
+<div class="swiper-container"> <img src="images/a.jpg" width="100%"> </div>
+<div class="hei30"></div>
+<div class="container center bod">
+  <div class="col-md-12 col-lg-12 ">
+    <div class=" pad0 weizhi ">
+      <h3 class="hot-title">潮流服装 <small>时尚单品</small></h3>
+    </div>
+    
+    <div class="filter-bar text-right mb-3">
+      <button class="btn btn-sm btn-default active">全部</button>
+      <button class="btn btn-sm btn-default">女装</button>
+      <button class="btn btn-sm btn-default">男装</button>
+    </div>
+    
+    <!-- 商品列表容器（动态渲染） -->
+    <div class="product-row" id="productList">
+      <!-- 商品内容由JS动态生成 -->
+    </div>
+    
+    <!-- 分页控件 -->
+    <nav class="text-center mt-5">
+      <ul class="pagination" id="pagination">
+        <li class="active"><a href="javascript:;" data-page="1">1</a></li>
+        <li><a href="javascript:;" data-page="2">2</a></li>
+        <li><a href="javascript:;" data-page="3">3</a></li>
+        <li id="nextPage"><a href="javascript:;">下一页 →</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<!--底部-->
+<div class="clearfix"></div>
+<div class="Footer-wrapper text-center">
+  <div class="fcr">© 2023 潮牌服饰 版权所有</div>
+</div>
+
+<script>
+// 1. 定义所有商品数据（分3页，每页8个，可根据需求调整）
+const productData = [
+  // 第1页商品
+  [
+    { img: "images/baby.jpg", name: "高腰牛仔短裤", price: "¥89.00", discount: "5折", link: "info.html" },
+    { img: "images/bb1.jpg", name: "针织开衫外套", price: "¥129.00", discount: "3折", link: "info.html" },
+    { img: "images/bb2.jpg", name: "韩版连衣裙", price: "¥159.00", discount: "", link: "info.html" },
+    { img: "images/cp1.jpg", name: "夏季碎花连衣裙", price: "¥109.00", discount: "7折", link: "info.html" },
+    { img: "images/tt1.jpg", name: "休闲工装夹克", price: "¥299.00", discount: "", link: "info2.html" },
+    { img: "images/tt2.jpg", name: "纯棉印花T恤", price: "¥79.00", discount: "6折", link: "info2.html" },
+    { img: "images/tt4.jpg", name: "黑色短袖", price: "¥159.00", discount: "", link: "info2.html" },
+    { img: "images/tt9.jpg", name: "休闲西装外套", price: "¥229.00", discount: "4折", link: "info2.html" }
+  ],
+  // 第2页商品（新增不同款式，保持格式一致）
+  [
+    { img: "images/tt5.jpg", name: "宽松阔腿牛仔裤", price: "¥119.00", discount: "8折", link: "info.html" },
+    { img: "images/bb3.jpg", name: "法式复古衬衫", price: "¥99.00", discount: "", link: "info.html" },
+    { img: "images/baby2.jpg", name: "高腰显瘦半身裙", price: "¥139.00", discount: "5折", link: "info.html" },
+    { img: "images/cp2.jpg", name: "吊带碎花长裙", price: "¥179.00", discount: "7折", link: "info.html" },
+    { img: "images/tt6.jpg", name: "纯色polo衫", price: "¥89.00", discount: "", link: "info2.html" },
+    { img: "images/tt7.jpg", name: "牛仔夹克外套", price: "¥259.00", discount: "6折", link: "info2.html" },
+    { img: "images/tt8.jpg", name: "冰丝短袖衬衫", price: "¥149.00", discount: "", link: "info2.html" },
+    { img: "images/bb4.jpg", name: "薄款防晒开衫", price: "¥79.00", discount: "4折", link: "info.html" }
+  ],
+  // 第3页商品（新增不同款式，保持格式一致）
+  [
+    { img: "images/baby3.jpg", name: "运动休闲短裤", price: "¥69.00", discount: "9折", link: "info.html" },
+    { img: "images/bb5.jpg", name: "温柔风针织长裙", price: "¥189.00", discount: "", link: "info.html" },
+    { img: "images/cp3.jpg", name: "泡泡袖连衣裙", price: "¥169.00", discount: "7折", link: "info.html" },
+    { img: "images/tt10.jpg", name: "工装休闲长裤", price: "¥139.00", discount: "", link: "info2.html" },
+    { img: "images/tt11.jpg", name: "印花短袖卫衣", price: "¥109.00", discount: "8折", link: "info2.html" },
+    { img: "images/bb6.jpg", name: "高腰直筒牛仔裤", price: "¥129.00", discount: "5折", link: "info.html" },
+    { img: "images/cp4.jpg", name: "复古港风T恤", price: "¥59.00", discount: "", link: "info.html" },
+    { img: "images/tt12.jpg", name: "休闲西装长裤", price: "¥199.00", discount: "6折", link: "info2.html" }
+  ]
+];
+
+// 2. 全局变量：当前页码
+let currentPage = 1;
+// 总页数
+const totalPages = productData.length;
+
+// 3. 渲染商品列表函数
+function renderProducts(page) {
+  const productList = document.getElementById('productList');
+  // 清空原有内容
+  productList.innerHTML = '';
+  // 获取当前页的商品数据
+  const pageData = productData[page - 1];
+  
+  // 遍历生成商品DOM
+  pageData.forEach(product => {
+    // 拼接商品HTML（保留原有样式和结构）
+    const productHtml = `
+      <div class="hot-item">
+        <a href="${product.link}" class="item-wrap">
+          ${product.discount ? `<span class="discount-tag">${product.discount}</span>` : ''}
+          <img src="${product.img}" alt="${product.name}">
+          <div class="hot-info">
+            <div class="hot-name">${product.name}</div>
+            <div class="hot-price">${product.price}</div>
+          </div>
+        </a>
+      </div>
+    `;
+    // 添加到容器
+    productList.innerHTML += productHtml;
+  });
+}
+
+// 4. 更新分页按钮状态（激活/禁用）
+function updatePaginationStatus() {
+  const paginationItems = document.querySelectorAll('#pagination li');
+  const nextPageBtn = document.getElementById('nextPage');
+  
+  // 重置所有页码激活状态
+  paginationItems.forEach(item => {
+    item.classList.remove('active');
+    item.classList.remove('disabled');
+  });
+  
+  // 激活当前页码
+  document.querySelector(`#pagination li a[data-page="${currentPage}"]`).parentNode.classList.add('active');
+  
+  // 处理下一页按钮：最后一页时禁用
+  if (currentPage === totalPages) {
+    nextPageBtn.classList.add('disabled');
+  } else {
+    nextPageBtn.classList.remove('disabled');
+  }
+  
+  // 处理页码禁用（可选：超出范围的页码禁用，这里只有3页，暂不需要）
+}
+
+// 5. 绑定分页点击事件
+function bindPaginationEvents() {
+  // 绑定页码点击
+  document.querySelectorAll('#pagination li a[data-page]').forEach(link => {
+    link.addEventListener('click', function() {
+      // 获取点击的页码
+      const page = parseInt(this.getAttribute('data-page'));
+      // 仅当页码有效且不等于当前页时更新
+      if (page && page !== currentPage && page <= totalPages) {
+        currentPage = page;
+        renderProducts(currentPage);
+        updatePaginationStatus();
+      }
+    });
+  });
+  
+  // 绑定下一页点击
+  document.getElementById('nextPage').addEventListener('click', function() {
+    // 最后一页不执行
+    if (currentPage >= totalPages) return;
+    currentPage++;
+    renderProducts(currentPage);
+    updatePaginationStatus();
+  });
+}
+
+// 6. 初始化页面（默认显示第1页）
+window.onload = function() {
+  renderProducts(currentPage);
+  updatePaginationStatus();
+  bindPaginationEvents();
+};
+</script>
+</body>
+</html>
