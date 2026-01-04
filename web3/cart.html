@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的购物车 - 潮牌服饰</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+.cart-info {
+  flex: 1;
+}
+.cart-price {
+  width: 100px;
+  text-align: center;
+  color: #e53935;
+  font-weight: bold;
+}
+.cart-quantity {
+  width: 120px;
+  text-align: center;
+}
+.cart-quantity button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+.cart-quantity input {
+  width: 40px;
+  height: 28px;
+  text-align: center;
+  border: 1px solid #ddd;
+  margin: 0 5px;
+}
+.cart-delete {
+  width: 80px;
+  text-align: center;
+  color: #e53935;
+  cursor: pointer;
+}
+.cart-total {
+  text-align: right;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.cart-empty {
+  text-align: center;
+  padding: 50px 0;
+  color: #999;
+}
+.btn-settle {
+  background: #e53935;
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<!-- 统一样式的header（和首页一致） -->
+<header class="top">
+  <div class="container">
+    <!-- 购物车入口 -->
+    <a href="cart.html" class="pull-right mr-3" style="margin-top:20px; margin-left: 20px;">
+      购物车 <span id="cartCount" class="badge">0</span>
+    </a>
+ 
+    <div class="user-actions pull-right hidden-xs" style="margin-top:20px;">
+      <a href="denglu.html" class="mr-3">登录</a>
+      <a href="reg.html">注册</a>
+    </div>
+  </div>
+  <div class="search pull-right mes" onclick="op(this)">
+    <input type="text" placeholder="搜索商品..." style="display:none; padding:5px; margin-top:10px;">
+  </div>
+  <div class="menu clearfix">
+    <ul class="container">
+      <li class="first"><a href="index.html" target="_self">首页</a></li>
+      <li><a href="news.html" target="_self">在线新闻</a></li>
+      <li><a href="guonei.html" target="_self">漂亮女装</a></li>
+      <li><a href="jinkou.html" target="_self">帅气男装</a></li>
+      <li><a href="remai.html" target="_self">潮流服装</a></li>
+      <li><a href="reg.html" target="_self">注册</a></li>
+    </ul>
+  </div>
+</header>
+
+<script>
+// 搜索框交互（和首页一致）
+function op(ele) {
+  const input = ele.querySelector('input');
+  input.style.display = input.style.display === 'none' ? 'block' : 'none';
+  if (input.style.display === 'block') input.focus();
+}
+
+// 更新购物车数量
+function updateCartCount() {
+  const cart = localStorage.getItem('cart');
+  const count = cart ? JSON.parse(cart).reduce((t, i) => t + i.quantity, 0) : 0;
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) cartCountEl.textContent = count;
+}
+</script>
+
+<div class="clearfix"></div>
+<div class="container bod mt-3">
+  <h3 class="mb-4">我的购物车</h3>
+  
+  <!-- 购物车列表 -->
+  <div id="cartList">
+    <!-- 空购物车提示 -->
+    <div class="cart-empty" id="emptyCart">
+      <p>您的购物车还是空的~</p>
+      <a href="index.html" class="btn btn-default">去逛逛</a>
+    </div>
+    
+    <!-- 购物车商品列表（动态渲染） -->
+    <div id="cartItems" style="display:none;"></div>
+  </div>
+  
+  <!-- 总价和结算 -->
+  <div class="cart-total" id="cartTotal" style="display:none;">
+    总计：¥<span id="totalPrice">0</span>
+    <button class="btn-settle ml-3" onclick="alert('结算功能开发中...')">结算</button>
+  </div>
+</div>
+
+<!-- 底部 -->
+<div class="Footer-wrapper text-center mt-5">
+  <div class="fcr">© 2025 潮牌服饰 版权所有</div>
+</div>
+
+<script>
+// 1. 获取购物车数据（localStorage存储）
+function getCartData() {
+  const cart = localStorage.getItem('cart');
+  return cart ? JSON.parse(cart) : [];
+}
+
+// 3. 渲染购物车列表
+function renderCart() {
+  const cart = getCartData();
+  const cartItems = document.getElementById('cartItems');
+  const emptyCart = document.getElementById('emptyCart');
+  const cartTotal = document.getElementById('cartTotal');
+  
+  // 空购物车
+  if (cart.length === 0) {
+    emptyCart.style.display = 'block';
+    cartItems.style.display = 'none';
+    cartTotal.style.display = 'none';
+    return;
+  }
+  
+  // 有商品时
+  emptyCart.style.display = 'none';
+  cartItems.style.display = 'block';
+  cartTotal.style.display = 'block';
+  
+  // 渲染商品
+  cartItems.innerHTML = '';
+  let total = 0;
+  
+  cart.forEach((item, index) => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    
+    const itemHtml = `
+      <div class="cart-item" data-index="${index}">
+        <img src="${item.img}" alt="${item.name}">
+        <div class="cart-info">
+          <h5>${item.name}</h5>
+        </div>
+        <div class="cart-price">¥${item.price}</div>
+        <div class="cart-quantity">
+          <button onclick="changeQuantity(${index}, -1)">-</button>
+          <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+          <button onclick="changeQuantity(${index}, 1)">+</button>
+        </div>
+        <div class="cart-delete" onclick="deleteItem(${index})">删除</div>
+      </div>
+    `;
+    cartItems.innerHTML += itemHtml;
+  });
+  
+  // 更新总价
+  document.getElementById('totalPrice').textContent = total.toFixed(2);
+}
+
+// 4. 修改商品数量
+function changeQuantity(index, change) {
+  const cart = getCartData();
+  const newQty = cart[index].quantity + change;
+  if (newQty < 1) return;
+  cart[index].quantity = newQty;
+  localStorage.setItem('cart', JSON.stringify(cart));
+  renderCart();
+  updateCartCount();
+}
+
+// 5. 手动输入数量
+function updateQuantity(index, value) {
+  const cart = getCartData();
+  const newQty = parseInt(value) || 1;
+  cart[index].quantity = newQty < 1 ? 1 : newQty;
+  localStorage.setItem('cart', JSON.stringify(cart));
+  renderCart();
+  updateCartCount();
+}
+
+// 6. 删除商品
+function deleteItem(index) {
+  if (!confirm('确定删除该商品吗？')) return;
+  const cart = getCartData();
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  renderCart();
+  updateCartCount();
+}
+
+// 页面加载时初始化
+window.onload = function() {
+  updateCartCount();
+  renderCart();
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新闻</title>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<!--头部-->
+<header class="top">
+  <div class="container">
+    <!-- 新增购物车入口 -->
+    <a href="cart.html" class="pull-right mr-3" style="margin-top:20px;">
+      购物车 <span id="cartCount" class="badge">0</span>
+    </a>
+
+    <div class="search pull-right mes" onclick="op(this)">
+
+      </div>
+  </div>
+  <div class="menu clearfix">
+    <ul class="container ">
+      <li class=" first"><a href="index.html" target="_self">首页</a></li>
+      <li><a href="news.html" target="_self">在线新闻</a></li>
+      <li class=""><a class="noborder " href="guonei.html" target="_self">漂亮女装</a></li>
+      <li class=""><a class="noborder " href="jinkou.html" target="_self">帅气男装</a></li>
+      <li class=""><a class="noborder " href="remai.html" target="_self">潮流服装</a></li>
+      <li class=""><a class="noborder " href="reg.html" target="_self">注册</a></li>
+    </ul>
+  </div>
+</header>
+<script>
+// 更新购物车数量
+function updateCartCount() {
+  const cart = localStorage.getItem('cart');
+  const count = cart ? JSON.parse(cart).reduce((t, i) => t + i.quantity, 0) : 0;
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) cartCountEl.textContent = count;
+}
+
+function op(ele){
+       var pDiv=ele.parentNode;
+        if(pDiv.classList.contains("tdiv")){
+             pDiv.classList.remove("tdiv");
+        }else{
+             pDiv.classList.add("tdiv");
+        }
+}
+
+// 页面加载时更新购物车数量
+window.onload = function() {
+  updateCartCount();
+};
+</script>
+
+<div class="clearfix"></div>
+<div class="swiper-container"> <img src="./images/b.jpg" width="100%"> </div>
+<div class="hei30"></div>
+<div class="container center bod">
+  <div class="col-md-12 col-lg-12 ">
+    <div class=" pad0 weizhi "> <span class="pull-left fontsize4">公司新闻</span>
+      <p class="clearfix"></p>
+    </div>
+    <div class="clearfix "></div>
+    <div class="hei30"></div>
+  </div>
+  <ul class="xw_list pad0 row">
+    <li class="col-sm-6 col-xs-12"> <span>
+      <h4><a href="newsinfo.html?id=1">风从柯桥来｜疫情下，家居服需求激增</a></h4>
+      <p>　春节临近，商场年味十足。“去年穿了2个月家居服，今年我得多买2套好看的在家换着穿。”耳边传来这样的对话。许多人提到自己的疫情生活，表示几乎每天都穿睡衣。</p>
+      <font class="visible-xs">xxxx.04.15</font> <em><a href="newsinfo.html?id=1">查看详情 >></a></em> </span> </li>
+    <li class="col-sm-6 col-xs-12"> <span>
+      <h4><a href="newsinfo.html?id=2">2021春夏女装面料解析（一）</a></h4>
+      <p>优雅浪漫的半透明面料彰显柔美的女性气质，是未来春夏的关键品类。随着“时尚、科技、绿色”的不断融合，面料呈现出更加多元化的外观和内涵。</p>
+      <font class="visible-xs">xxx.04.15</font> <em><a href="newsinfo.html?id=2">查看详情 >></a></em> </span> </li>
+    <li class="col-sm-6 col-xs-12"> <span>
+      <h4><a href="newsinfo.html?id=3">腿粗可以穿靴子吗？可以</a></h4>
+      <p>靴子是我们很多女生冬季必买的一款鞋款，马丁靴、骑士靴、过膝靴、雪地靴、切尔西靴等，有非常多的选择。那么如何选择适合是自己的呢？腿粗的女生又改如何选择呢？</p>
+      <font class="visible-xs">xxxx.04.15</font> <em><a href="newsinfo.html?id=3">查看详情 >></a></em> </span> </li>
+    <li class="col-sm-6 col-xs-12"> <span>
+      <h4><a href="newsinfo.html?id=4">pick西装外套，显瘦有型百搭款</a></h4>
+      <p>今年西装的单品大受欢迎，其中最喜欢的是西装裙子的组合，那么什么样子的西装单品又是最受欢迎的呢，今天来说说廓形西装吧。明星潮人们也都在穿</p>
+      <font class="visible-xs">xxxx.04.15</font> <em><a href="newsinfo.html?id=4">查看详情 >></a></em> </span> </li>
+    <li class="col-sm-6 col-xs-12"> <span>
+      <h4><a href="newsinfo.html?id=5">耐克 Nike Offline 凉拖鞋全新配色登陆</a></h4>
+      <p>耐克全新凉拖鞋系列 Nike Offline，继早前的黑橘配色后又一款全新「Army Olive」配色正式公布。</p>
+      <font class="visible-xs">xxxx.04.15</font> <em><a href="newsinfo.html?id=5">查看详情 >></a></em> </span> </li>
+    <li class="col-sm-6 col-xs-12"> <span>
+      <h4><a href="newsinfo.html?id=6">新春单品｜走亲访友 羊羔毛外套推荐</a></h4>
+      <p>羔毛顾名思义，取自绵羊第一次剪下的羊毛。并且用这种原料纺出来的纱线手感确实优于普通羊毛保暖性能比普通羊毛好，价格也高一些。</p>
+      <font class="visible-xs">xxxx.04.15</font> <em><a href="newsinfo.html?id=6">查看详情 >></a></em> </span> </li>
+  </ul>
+  <div class="clearfix"></div>
+</div>
+<div class="clearfix "></div>
+<div class="hei30"></div>
+<!--底部-->
+<div class="clearfix"></div>
+<div class="Footer-wrapper text-center">
+  <div class="fcr">© 2025 潮牌服饰 版权所有</div>
+</div>
+</body>
+</html>

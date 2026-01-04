@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>潮牌女装 - 精选系列</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+.cp-item { margin: 15px 0; transition: transform .3s; }
+.cp-item:hover { transform: translateY(-5px); }
+.cp-item img { width: 100%; height: 250px; object-fit: cover; border-radius: 4px; }
+.price { color: #d9534f; font-weight: bold; }
+.original-price { color: #999; text-decoration: line-through; font-size: 14px; }
+.sort-bar { margin: 15px 0; text-align: right; }
+.sort-btn { margin-left: 5px; padding: 5px 10px; }
+/* 仅新增分页激活/禁用样式，不改变原有布局 */
+.pagination li.active a {
+  background-color: #d9534f;
+  border-color: #d9534f;
+  color: #fff;
+}
+.pagination li a {
+  cursor: pointer;
+}
+/* 移除链接下划线，保持原有视觉 */
+.cp-item a {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
+</head>
+<body>
+<!--头部-->
+<header class="top">
+  <div class="container">
+    <!-- 新增购物车入口 -->
+    <a href="cart.html" class="pull-right mr-3" style="margin-top:20px;">
+      购物车 <span id="cartCount" class="badge">0</span>
+    </a>
+
+    <div class="search pull-right mes" onclick="op(this)"></div>
+  </div>
+  <div class="menu clearfix">
+    <ul class="container">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="news.html">在线新闻</a></li>
+      <li class="active"><a href="guonei.html">漂亮女装</a></li>
+      <li><a href="jinkou.html">帅气男装</a></li>
+      <li><a href="remai.html">潮流服装</a></li>
+      <li><a href="reg.html">注册</a></li>
+    </ul>
+  </div>
+</header>
+<script>
+// 更新购物车数量
+function updateCartCount() {
+  const cart = localStorage.getItem('cart');
+  const count = cart ? JSON.parse(cart).reduce((t, i) => t + i.quantity, 0) : 0;
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) cartCountEl.textContent = count;
+}
+
+function op(ele){
+  ele.parentNode.classList.toggle("tdiv");
+}
+
+// 1. 定义所有女装商品数据（分3页，每页8个，完全匹配原有布局/样式）
+const femaleProductData = {
+  // 原始商品数据（包含排序字段：price-售价，isNew-是否新品）
+  rawData: [
+    // 第1页商品（原有8个）
+    { img: "images/cp5.jpg", title: "欧美长款包臀裙", price: 149, originalPrice: "", link: "info.html", isNew: false },
+    { img: "images/bb1.jpg", title: "猫猫联名连衣裙", price: 219, originalPrice: "", link: "info.html", isNew: false },
+    { img: "images/cp7.jpg", title: "夏季雪纺休闲套装", price: 259, originalPrice: "", link: "info.html", isNew: true },
+    { img: "images/cp8.jpg", title: "慵懒风宽松连衣裙", price: 189, originalPrice: "", link: "info.html", isNew: false },
+    { img: "images/cp1.jpg", title: "夏季碎花连衣裙", price: 159, originalPrice: 259, link: "info.html", isNew: true },
+    { img: "images/cp2.jpg", title: "格纹短袖T恤裙", price: 89, originalPrice: "", link: "info.html", isNew: false },
+    { img: "images/baby.jpg", title: "挂脖白裙", price: 129, originalPrice: 199, link: "info.html", isNew: false },
+    { img: "images/cp4.jpg", title: "复古咖色大衣套装", price: 169, originalPrice: "", link: "info.html", isNew: true },
+    // 第2页商品（新增8个，保持布局一致）
+    { img: "images/cp9.jpg", title: "法式碎花长裙", price: 229, originalPrice: 329, link: "info.html", isNew: true },
+    { img: "images/bb2.jpg", title: "温柔风针织衫", price: 179, originalPrice: "", link: "info.html", isNew: false },
+    { img: "images/cp10.jpg", title: "工装背带裤", price: 199, originalPrice: "", link: "info.html", isNew: false },
+    { img: "images/cp11.jpg", title: "泡泡袖衬衫", price: 139, originalPrice: 199, link: "info.html", isNew: true },
+    { img: "images/bb3.jpg", title: "短款小外套", price: 209, originalPrice: "", link: "info.html", isNew: false },
+    { img: "images/cp12.jpg", title: "高腰半身裙", price: 119, originalPrice: 179, link: "info.html", isNew: false },
+    { img: "images/baby2.jpg", title: "黑款半身裙", price: 159, originalPrice: "", link: "info.html", isNew: true },
+    { img: "images/cp13.jpg", title: "宽松防晒衣", price: 99, originalPrice: "", link: "info.html", isNew: false },
+    // 第3页商品（新增8个，保持布局一致）
+    { img: "images/cp14.jpg", title: "复古牛仔外套", price: 249, originalPrice: 349, link: "info.html", isNew: false },
+    { img: "images/bb14.jpg", title: "冰丝短袖T恤", price: 79, originalPrice: "", link: "info.html", isNew: true },
+    { img: "images/cp15.jpg", title: "阔腿牛仔裤", price: 189, originalPrice: "", link: "info.html", isNew: false },
+    { img: "images/bb4.jpg", title: "蕾丝连衣裙", price: 269, originalPrice: 369, link: "info.html", isNew: true },
+
+  ],
+  // 分页后的数据
+  pageData: [],
+  // 初始化分页数据（按排序规则）
+  initPageData: function(sortType = "default") {
+    let sortedData = [...this.rawData];
+    // 按排序类型处理
+    switch(sortType) {
+      case "price-asc": // 价格↓（从低到高）
+        sortedData.sort((a, b) => a.price - b.price);
+        break;
+      case "new": // 新品（isNew=true优先）
+        sortedData.sort((a, b) => b.isNew - a.isNew);
+        break;
+      default: // 默认排序（原始顺序）
+        break;
+    }
+    // 分割为每页8个（匹配原有每页数量）
+    this.pageData = [];
+    for (let i = 0; i < sortedData.length; i += 8) {
+      this.pageData.push(sortedData.slice(i, i + 8));
+    }
+    return this.pageData;
+  }
+};
+
+// 2. 全局变量
+let currentPage = 1; // 当前页码
+let currentSort = "default"; // 当前排序类型
+let totalPages = femaleProductData.initPageData().length; // 总页数
+
+// 3. 渲染商品列表（完全保留原有布局/样式）
+function renderProducts(page) {
+  const container = document.getElementById('productContainer');
+  container.innerHTML = ''; // 清空原有内容
+  
+  // 校验页码有效性
+  if (page < 1 || page > totalPages) return;
+  
+  // 获取当前页数据
+  const pageData = femaleProductData.pageData[page - 1];
+  
+  // 遍历生成商品项（完全匹配原有col-sm-3/col-xs-6布局）
+  pageData.forEach((product, index) => {
+    // 计算全局索引，用于生成唯一的商品ID
+    const globalIndex = (page - 1) * 8 + index + 1;
+    const itemHtml = `
+      <div class="col-sm-3 col-xs-6 cp-item">
+        <a href="${product.link}?id=${globalIndex}">
+          <img src="${product.img}">
+          <p>${product.title}</p>
+          <span class="price">¥${product.price}</span>
+          ${product.originalPrice ? `<span class="original-price"> ¥${product.originalPrice}</span>` : ''}
+        </a>
+      </div>
+    `;
+    container.innerHTML += itemHtml;
+  });
+}
+
+// 4. 更新分页按钮激活状态（不改变原有分页布局）
+function updatePaginationStatus() {
+  // 重置所有页码激活状态
+  document.querySelectorAll('#pagination li').forEach(li => {
+    li.classList.remove('active');
+  });
+  // 激活当前页码
+  document.querySelector(`#pagination li a[data-page="${currentPage}"]`).parentNode.classList.add('active');
+}
+
+// 5. 绑定分页点击事件
+function bindPaginationEvents() {
+  document.querySelectorAll('#pagination li a[data-page]').forEach(link => {
+    link.addEventListener('click', function() {
+      const page = parseInt(this.getAttribute('data-page'));
+      if (page && page !== currentPage) {
+        currentPage = page;
+        renderProducts(currentPage);
+        updatePaginationStatus();
+      }
+    });
+  });
+}
+
+// 6. 绑定排序按钮事件（保留原有按钮样式/布局）
+function bindSortEvents() {
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      // 重置排序按钮激活状态
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      
+      // 更新排序类型，重置为第1页
+      currentSort = this.getAttribute('data-sort');
+      currentPage = 1;
+      
+      // 重新初始化分页数据，渲染页面
+      femaleProductData.initPageData(currentSort);
+      renderProducts(currentPage);
+      updatePaginationStatus();
+    });
+  });
+}
+
+// 7. 页面初始化（加载完成后执行）
+window.onload = function() {
+  // 初始化分页数据，渲染第1页
+  femaleProductData.initPageData(currentSort);
+  renderProducts(currentPage);
+  // 绑定事件
+  bindPaginationEvents();
+  bindSortEvents();
+  // 更新购物车数量
+  updateCartCount();
+};
+</script>
+<div class="container bod">
+  <h3 class="text-left">潮牌女装 <small>精选系列</small></h3>
+  <div class="sort-bar">
+    <button class="sort-btn btn btn-default active" data-sort="default">默认</button>
+    <button class="sort-btn btn btn-default" data-sort="price-asc">价格↓</button>
+    <button class="sort-btn btn btn-default" data-sort="new">新品</button>
+  </div>
+  <!-- 保留原有row布局，仅添加id用于动态渲染 -->
+  <div class="cp row text-center" id="productContainer">  
+    <!-- 商品内容由JS动态生成，保持原有col-sm-3/col-xs-6布局 -->
+  </div>
+  <nav class="text-center">
+    <ul class="pagination" id="pagination">
+      <li class="active"><a href="javascript:;" data-page="1">1</a></li>
+      <li><a href="javascript:;" data-page="2">2</a></li>
+      <li><a href="javascript:;" data-page="3">3</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="Footer-wrapper text-center">
+  <div class="fcr">© 2025 潮牌服饰 版权所有</div>
+</div>
+</body>
+</html>

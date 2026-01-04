@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>注册</title>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+.error {color:red;margin:10px 0;text-align:center;display:none;}
+.form-group .hint {font-size:12px;color:#777;margin-top:5px;display:none;}
+.form-group.has-error .hint {display:block;color:#a94442;}
+</style>
+</head>
+<body>
+<!--头部-->
+<header class="top">
+  <div class="container">
+    <!-- 新增购物车入口 -->
+    <a href="cart.html" class="pull-right mr-3" style="margin-top:20px;">
+      购物车 <span id="cartCount" class="badge">0</span>
+    </a>
+
+    <div class="search pull-right mes" onclick="op(this)">
+
+      </div>
+  </div>
+  <div class="menu clearfix">
+    <ul class="container ">
+      <li class=" first"><a href="index.html" target="_self">首页</a></li>
+      <li><a href="news.html" target="_self">在线新闻</a></li>
+      <li class=""><a class="noborder " href="guonei.html" target="_self">漂亮女装</a></li>
+      <li class=""><a class="noborder " href="jinkou.html" target="_self">帅气男装</a></li>
+      <li class=""><a class="noborder " href="remai.html" target="_self">潮流服装</a></li>
+      <li class=""><a class="noborder " href="reg.html" target="_self">注册</a></li>
+    </ul>
+  </div>
+</header>
+<script>
+// 更新购物车数量
+function updateCartCount() {
+  const cart = localStorage.getItem('cart');
+  const count = cart ? JSON.parse(cart).reduce((t, i) => t + i.quantity, 0) : 0;
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) cartCountEl.textContent = count;
+}
+
+function op(ele){
+       var pDiv=ele.parentNode;
+        if(pDiv.classList.contains("tdiv")){
+             pDiv.classList.remove("tdiv");
+        }else{
+             pDiv.classList.add("tdiv");
+        }
+}
+
+// 表单验证函数
+function checkForm() {
+  let isValid = true;
+  
+  if (!checkEmail()) isValid = false;
+  if (!checkPassword()) isValid = false;
+  if (!checkConfirmPassword()) isValid = false;
+  
+  if (!document.getElementById('agreeTerms').checked) {
+    showError('请阅读并同意用户服务协议');
+    isValid = false;
+  }
+  
+  return isValid;
+}
+
+function checkEmail() {
+  const email = document.getElementById('email').value;
+  const group = document.getElementById('emailGroup');
+  const emailRegex = /^[\w-]+@[\w-]+\.[\w-]+$/;
+  
+  if (!emailRegex.test(email)) {
+    group.classList.add('has-error');
+    showError('请输入有效的电子邮箱地址');
+    return false;
+  }
+  
+  group.classList.remove('has-error');
+  clearError();
+  return true;
+}
+
+// 密码验证
+function checkPassword() {
+  const pwd = document.getElementById('password').value;
+  const group = document.getElementById('pwdGroup');
+  
+  if (pwd.length < 6) {
+    group.classList.add('has-error');
+    showError('密码长度不能少于6位');
+    return false;
+  }
+  
+  group.classList.remove('has-error');
+  checkConfirmPassword(); // 重新检查确认密码
+  clearError();
+  return true;
+}
+
+// 确认密码验证
+function checkConfirmPassword() {
+  const pwd = document.getElementById('password').value;
+  const confirmPwd = document.getElementById('confirmPassword').value;
+  const group = document.getElementById('confirmPwdGroup');
+  
+  if (pwd !== confirmPwd) {
+    group.classList.add('has-error');
+    showError('两次输入的密码不一致');
+    return false;
+  }
+  
+  group.classList.remove('has-error');
+  clearError();
+  return true;
+}
+
+function showError(msg) {
+  const errorEl = document.getElementById('errorMsg');
+  errorEl.textContent = msg;
+  errorEl.style.display = 'block';
+}
+
+function clearError() {
+  const errorEl = document.getElementById('errorMsg');
+  errorEl.textContent = '';
+  errorEl.style.display = 'none';
+}
+
+// 页面加载时更新购物车数量
+window.onload = function() {
+  updateCartCount();
+};
+</script>
+<div class="clearfix"></div>
+<div class="hei30"></div>
+<div class="container center bod">
+  <div class="col-md-12 col-lg-12 ">
+    <div class=" pad0 weizhi "> <span class="pull-left fontsize4">在线注册</span>
+      <p class="clearfix"></p>
+    </div>
+    <div class="content">
+      <div class="text-center">
+        <h2>欢迎注册潮牌衣服会员</h2>
+      </div>
+      <form style="width:600px; margin:10px auto; padding:30px;" action="denglu.html" onsubmit="return checkForm()">
+        <div class="error" id="errorMsg"></div>
+        
+        <div class="form-group" id="emailGroup">
+          <label for="email">电子邮箱</label>
+          <input type="email" class="form-control input-lg" id="email" placeholder="请输入电子邮箱作为账号" onblur="checkEmail()">
+          <div class="hint">请输入有效的电子邮箱地址</div>
+        </div>
+        
+        <div class="form-group" id="pwdGroup">
+          <label for="password">设置密码</label>
+          <input type="password" class="form-control input-lg" id="password" placeholder="请设置密码" onblur="checkPassword()">
+          <div class="hint">密码长度不能少于6位，建议包含字母和数字</div>
+        </div>
+        
+        <div class="form-group" id="confirmPwdGroup">
+          <label for="confirmPassword">确认密码</label>
+          <input type="password" class="form-control input-lg" id="confirmPassword" placeholder="请再次输入密码" onblur="checkConfirmPassword()">
+          <div class="hint">两次输入的密码不一致</div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="agreeTerms" required> 我已阅读并同意<a href="#" data-toggle="modal" data-target="#termsModal">《用户服务协议》</a>
+          </label>
+        </div>
+        
+        <button type="submit" class="btn btn-success btn-block btn-lg">注册</button>
+        <br>
+        <a href="denglu.html">如有账号点击登陆</a>
+      </form>
+    </div>
+    <div class="clearfix "></div>
+    <div class="hei30"></div>
+  </div>
+  <div class="clearfix "></div>
+  <div class="hei30"></div>
+</div>
+
+<!-- 服务协议模态框 -->
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">用户服务协议</h4>
+      </div>
+      <div class="modal-body" style="max-height:400px;overflow-y:auto;">
+        <p>欢迎注册成为本商城用户，为了保护您的权益，请仔细阅读以下协议：</p>
+        <p>1. 您保证所提供的注册信息真实有效</p>
+        <p>2. 您应妥善保管账号和密码，对账号下的行为负责</p>
+        <p>3. 本商城保留对违规账号的处理权</p>
+        <p>4. 更多条款请参考完整协议...</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">我已阅读</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--底部-->
+<div class="clearfix"></div>
+<div class="Footer-wrapper text-center">
+  <div class="fcr">© 2025 潮牌服饰 版权所有</div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

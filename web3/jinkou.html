@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>潮牌男装 - 精选系列</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+.product-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all .3s ease;
+}
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+}
+.product-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+.product-info {
+  padding: 15px;
+  text-align: left;
+}
+.product-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+.price-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sale-price {
+  color: #e53935;
+  font-size: 18px;
+  font-weight: bold;
+}
+.original-price {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 14px;
+}
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+.filter-group select {
+  padding: 6px 12px;
+  margin-left: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+/* 分页按钮样式优化 */
+.pagination {
+  justify-content: center;
+}
+.pagination li {
+  margin: 0 5px;
+}
+.pagination li a {
+  padding: 8px 15px;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+}
+.pagination li.active a {
+  background-color: #e53935;
+  color: #fff;
+  border-color: #e53935;
+}
+.pagination li.disabled a {
+  color: #999;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+}
+/* 链接样式优化 */
+.product-card a {
+  text-decoration: none;
+  display: block;
+}
+</style>
+</head>
+<body>
+<!--头部-->
+<header class="top">
+  <div class="container">
+    <!-- 新增购物车入口 -->
+    <a href="cart.html" class="pull-right mr-3" style="margin-top:20px;">
+      购物车 <span id="cartCount" class="badge">0</span>
+    </a>
+
+    <div class="search pull-right mes" onclick="op(this)"></div>
+  </div>
+  <div class="menu clearfix">
+    <ul class="container">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="news.html">在线新闻</a></li>
+      <li><a href="guonei.html">漂亮女装</a></li>
+      <li class="active"><a href="jinkou.html">帅气男装</a></li>
+      <li><a href="remai.html">潮流服装</a></li>
+      <li><a href="reg.html">注册</a></li>
+    </ul>
+  </div>
+</header>
+<script>
+// 更新购物车数量
+function updateCartCount() {
+  const cart = localStorage.getItem('cart');
+  const count = cart ? JSON.parse(cart).reduce((t, i) => t + i.quantity, 0) : 0;
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) cartCountEl.textContent = count;
+}
+
+function op(ele){
+  ele.parentNode.classList.toggle("tdiv");
+}
+
+// 1. 定义所有男装商品数据（分3页，每页8个，包含排序所需字段）
+const maleProductData = {
+  // 原始数据（包含排序字段：price-售价，isNew-是否新品）
+  rawData: [
+    { img: "images/tt1.jpg", title: "休闲工装牛仔服", salePrice: 359, originalPrice: 499, link: "info2.html", isNew: false },
+    { img: "images/tt2.jpg", title: "纯棉印花外套", salePrice: 129, originalPrice: "", link: "info2.html", isNew: true },
+    { img: "images/tt3.jpg", title: "联名款棒球服", salePrice: 259, originalPrice: 329, link: "info2.html", isNew: false },
+    { img: "images/tt4.jpg", title: "黑色印花短袖", salePrice: 199, originalPrice: "", link: "info2.html", isNew: false },
+    { img: "images/tt5.jpg", title: "潮流短袖", salePrice: 279, originalPrice: "", link: "info2.html", isNew: true },
+    { img: "images/tt9.jpg", title: "休闲格子T恤", salePrice: 459, originalPrice: 599, link: "info2.html", isNew: false },
+    { img: "images/tt7.jpg", title: "韩式防风外套", salePrice: 329, originalPrice: "", link: "info2.html", isNew: true },
+    { img: "images/tt8.jpg", title: "夏季短袖", salePrice: 239, originalPrice: 299, link: "info2.html", isNew: false },
+    // 第2页商品
+    { img: "images/tt10.jpg", title: "工装休闲长裤", salePrice: 219, originalPrice: 269, link: "info2.html", isNew: true },
+    { img: "images/666.jpg", title: "印花短袖卫衣", salePrice: 189, originalPrice: "", link: "info2.html", isNew: false },
+    { img: "images/tt12.jpg", title: "休闲西装长裤", salePrice: 299, originalPrice: 359, link: "info2.html", isNew: true },
+    { img: "images/Ott13.jpg", title: "宽松牛仔外套", salePrice: 399, originalPrice: 459, link: "info2.html", isNew: false },
+  ],
+  // 分页后的数据（每页8条）
+  pageData: [],
+  // 初始化分页数据
+  initPageData: function(sortType = "default") {
+    let sortedData = [...this.rawData];
+    // 根据排序类型处理数据
+    switch(sortType) {
+      case "price-desc": // 价格从高到低
+        sortedData.sort((a, b) => b.salePrice - a.salePrice);
+        break;
+      case "price-asc": // 价格从低到高
+        sortedData.sort((a, b) => a.salePrice - b.salePrice);
+        break;
+      case "new": // 最新上架（isNew=true优先）
+        sortedData.sort((a, b) => b.isNew - a.isNew);
+        break;
+      default: // 默认排序（原始顺序）
+        break;
+    }
+    // 分割成每页8条的分页数据
+    this.pageData = [];
+    for (let i = 0; i < sortedData.length; i += 8) {
+      this.pageData.push(sortedData.slice(i, i + 8));
+    }
+    return this.pageData;
+  }
+};
+
+// 2. 全局变量
+let currentPage = 1; // 当前页码
+let currentSort = "default"; // 当前排序类型
+let totalPages = 0; // 总页数
+
+// 3. 渲染商品列表函数
+function renderProducts(page) {
+  const productGrid = document.getElementById('productGrid');
+  productGrid.innerHTML = ''; // 清空原有内容
+  
+  // 校验页码有效性
+  if (page < 1 || page > totalPages) return;
+  
+  // 获取当前页数据
+  const pageData = maleProductData.pageData[page - 1];
+  
+  // 遍历生成商品卡片
+  pageData.forEach((product, index) => {
+    // 计算全局索引，用于生成唯一的商品ID
+    const globalIndex = (page - 1) * 8 + index + 1;
+    const productHtml = `
+      <div class="product-card">
+        <a href="${product.link}?id=${globalIndex}">
+          <img src="${product.img}" class="product-img" alt="${product.title}">
+          <div class="product-info">
+            <div class="product-title">${product.title}</div>
+            <div class="price-wrap">
+              <span class="sale-price">¥${product.salePrice}</span>
+              ${product.originalPrice ? `<span class="original-price">¥${product.originalPrice}</span>` : ''}
+            </div>
+          </div>
+        </a>
+      </div>
+    `;
+    productGrid.innerHTML += productHtml;
+  });
+}
+
+// 4. 更新分页按钮状态
+function updatePaginationStatus() {
+  const paginationItems = document.querySelectorAll('#pagination li');
+  const nextPageBtn = document.getElementById('nextPage');
+  
+  // 重置所有页码状态
+  paginationItems.forEach(item => {
+    item.classList.remove('active', 'disabled');
+  });
+  
+  // 激活当前页码
+  document.querySelector(`#pagination li a[data-page="${currentPage}"]`)?.parentNode.classList.add('active');
+  
+  // 最后一页禁用下一页
+  if (currentPage === totalPages) {
+    nextPageBtn.classList.add('disabled');
+  } else {
+    nextPageBtn.classList.remove('disabled');
+  }
+}
+
+// 5. 绑定分页事件
+function bindPaginationEvents() {
+  // 页码点击事件
+  document.querySelectorAll('#pagination li a[data-page]').forEach(link => {
+    link.addEventListener('click', function() {
+      const page = parseInt(this.getAttribute('data-page'));
+      if (page && page !== currentPage && page <= totalPages) {
+        currentPage = page;
+        renderProducts(currentPage);
+        updatePaginationStatus();
+      }
+    });
+  });
+  
+  // 下一页点击事件
+  document.getElementById('nextPage').addEventListener('click', function() {
+    if (currentPage >= totalPages || this.parentNode.classList.contains('disabled')) return;
+    currentPage++;
+    renderProducts(currentPage);
+    updatePaginationStatus();
+  });
+}
+
+// 6. 绑定排序事件
+function bindSortEvent() {
+  const sortSelect = document.getElementById('sort');
+  sortSelect.addEventListener('change', function() {
+    currentSort = this.value;
+    currentPage = 1; // 排序后重置为第1页
+    
+    // 重新初始化分页数据（按新排序规则）
+    maleProductData.initPageData(currentSort);
+    totalPages = maleProductData.pageData.length;
+    
+    // 重新渲染和更新分页
+    renderProducts(currentPage);
+    updatePaginationStatus();
+  });
+}
+
+// 7. 页面初始化
+window.onload = function() {
+  // 初始化分页数据（默认排序）
+  maleProductData.initPageData(currentSort);
+  totalPages = maleProductData.pageData.length;
+  
+  // 渲染初始页面、更新分页状态、绑定事件
+  renderProducts(currentPage);
+  updatePaginationStatus();
+  bindPaginationEvents();
+  bindSortEvent();
+  // 更新购物车数量
+  updateCartCount();
+};
+</script>
+<div class="swiper-container"> <img src="images/a.jpg" class="img-responsive"> </div>
+<div class="container bod">
+  <div class="filter-bar">
+    <h3>潮牌男装 <small>精选系列</small></h3>
+    <div class="filter-group">
+      <span>排序:</span>
+      <select id="sort">
+        <option value="default">默认</option>
+        <option value="price-desc">价格从高到低</option>
+        <option value="price-asc">价格从低到高</option>
+        <option value="new">最新上架</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- 商品列表容器（动态渲染） -->
+  <div class="product-grid" id="productGrid">
+    <!-- 商品内容由JS动态生成 -->
+  </div>
+  
+  <!-- 分页控件 -->
+  <nav class="text-center" style="margin: 30px 0;">
+    <ul class="pagination" id="pagination">
+      <li class="active"><a href="javascript:;" data-page="1">1</a></li>
+      <li><a href="javascript:;" data-page="2">2</a></li>
+      <li id="nextPage"><a href="javascript:;">下一页 →</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="Footer-wrapper text-center">
+  <div class="fcr">© 2025 潮牌服饰 版权所有</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>注册</title>
+<!-- 保留原有样式表结构 -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+/* 新增样式 */
+.hei30 {height:30px;}
+.fontsize4 {font-size:18px;}
+.fontsize5 {font-size:24px;}
+.clearfix:after {content:"";display:table;clear:both;}
+.pull-left {float:left;}
+.pull-right {float:right;}
+.mes {cursor:pointer;}
+.noborder {border:none;}
+.center {text-align:center;}
+.bod {background:#fff;padding:30px;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,.05);}
+.content {max-width:600px;margin:0 auto;}
+.form-group {margin-bottom:15px;}
+.btn-lg {padding:10px 16px;font-size:18px;}
+.btn-block {display:block;width:100%;}
+.error {color:red;margin:10px 0;text-align:center;display:none;}
+.extra-links {display:flex;justify-content:space-between;margin:15px 0;}
+.other-login {text-align:center;margin-top:30px;}
+.login-icons {display:flex;justify-content:center;gap:20px;margin-top:15px;}
+.icon {width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;cursor:pointer;}
+.wx {background:#07c160;}
+.qq {background:#12b7f5;}
+</style>
+</head>
+<body>
+<!-- 保留原有头部框架 -->
+<header class="top">
+  <div class="container">
+    <!-- 新增购物车入口 -->
+    <a href="cart.html" class="pull-right mr-3" style="margin-top:20px;">
+      购物车 <span id="cartCount" class="badge">0</span>
+    </a>
+
+    <div class="search pull-right mes" onclick="op(this)">
+      <input type="text" placeholder="搜索商品..." style="display:none;padding:5px;border-radius:4px;border:1px solid #ddd;">
+    </div>
+  </div>
+  <div class="menu clearfix">
+    <ul class="container ">
+      <li class=" first"><a href="index.html" target="_self">首页</a></li>
+      <li><a href="news.html" target="_self">在线新闻</a></li>
+      <li class=""><a class="noborder " href="guonei.html" target="_self">漂亮女装</a></li>
+      <li class=""><a class="noborder " href="jinkou.html" target="_self">帅气男装</a></li>
+      <li class=""><a class="noborder " href="remai.html" target="_self">潮流服装</a></li>
+      <li class=""><a class="noborder " href="reg.html" target="_self">注册</a></li>
+    </ul>
+  </div>
+</header>
+
+<script>
+function op(ele){
+  const input = ele.querySelector('input');
+  input.style.display = input.style.display === 'none' ? 'block' : 'none';
+  if(input.style.display === 'block') input.focus();
+}
+
+// 更新购物车数量
+function updateCartCount() {
+  const cart = localStorage.getItem('cart');
+  const count = cart ? JSON.parse(cart).reduce((t, i) => t + i.quantity, 0) : 0;
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) cartCountEl.textContent = count;
+}
+
+function checkForm() {
+  const email = document.getElementById('email').value;
+  const pwd = document.getElementById('pwd').value;
+  const error = document.getElementById('errorMsg');
+  
+  if (!/^[\w-]+@[\w-]+\.[\w-]+$/.test(email)) {
+    error.textContent = '请输入有效的邮箱';
+    error.style.display = 'block';
+    return false;
+  }
+  
+  if (pwd.length < 6) {
+    error.textContent = '密码长度不能少于6位';
+    error.style.display = 'block';
+    return false;
+  }
+  
+  if (document.getElementById('remember').checked) {
+    localStorage.setItem('userEmail', email);
+  } else {
+    localStorage.removeItem('userEmail');
+  }
+  
+  return true;
+}
+
+window.onload = () => {
+  // 更新购物车数量
+  updateCartCount();
+  
+  const savedEmail = localStorage.getItem('userEmail');
+  if (savedEmail) {
+    document.getElementById('email').value = savedEmail;
+    document.getElementById('remember').checked = true;
+  }
+};
+</script>
+
+<div class="clearfix"></div>
+<div class="swiper-container"> <img src="images/b.jpg" width="100%"> </div>
+<div class="hei30"></div>
+
+<div class="container center bod">
+  <div class="col-md-12 col-lg-12 ">
+    <div class=" pad0 weizhi "> <span class="pull-left fontsize4">登陆</span>
+      <p class="clearfix"></p>
+    </div>
+    <div class="content">
+      <div class="text-center">
+        <h2>欢迎登陆潮牌衣服会员</h2>
+      </div>
+      
+      <div class="error" id="errorMsg"></div>
+      <form style="width:600px;margin:10px auto;padding:30px;" onsubmit="return checkForm()">
+        <div class="form-group">
+          <label for="email">帐号</label>
+          <input type="email" class="form-control input-lg" id="email" placeholder="请输入邮箱账号" required>
+        </div>
+        <div class="form-group">
+          <label for="pwd">密码</label>
+          <input type="password" class="form-control input-lg" id="pwd" placeholder="请输入密码" required>
+        </div>
+        
+        <div class="extra-links">
+          <label><input type="checkbox" id="remember"> 记住我</label>
+          <a href="#">忘记密码?</a>
+        </div>
+        
+        <button type="submit" class="btn btn-success btn-block btn-lg">登陆</button>
+        <br>
+        <a href="reg.html">没有账号点击注册</a>
+        
+        <div class="other-login">
+          <p>其他登录方式</p>
+          <div class="login-icons">
+            <div class="icon wx" onclick="alert('微信登录')">微</div>
+            <div class="icon qq" onclick="alert('QQ登录')">Q</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="clearfix "></div>
+<div class="hei30"></div>
+
+<!--底部保持原有结构-->
+<div class="Footer-wrapper">
+  <div class="fcr">服装平台 <br>
+    客服热线：400-123-4567 | 工作时间：9:00-21:00
+  </div>
+</div>
+</body>
+</html>

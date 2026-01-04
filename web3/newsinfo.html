@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新闻详情 - 潮牌服饰</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+.news-detail {
+  padding: 20px;
+  line-height: 1.8;
+}
+.news-title {
+  font-size: 24px;
+  text-align: center;
+  margin: 20px 0;
+}
+.news-date {
+  text-align: center;
+  color: #999;
+  margin-bottom: 30px;
+}
+.news-content {
+  font-size: 16px;
+  color: #333;
+}
+.back-btn {
+  margin: 20px 0;
+}
+</style>
+</head>
+<body>
+<!-- 统一样式的header（和首页一致） -->
+<header class="top">
+  <div class="container">
+    <!-- 购物车入口 -->
+    <a href="cart.html" class="pull-right mr-3" style="margin-top:20px; margin-left: 20px;">
+      购物车 <span id="cartCount" class="badge">0</span>
+    </a>
+ 
+    <div class="user-actions pull-right hidden-xs" style="margin-top:20px;">
+      <a href="denglu.html" class="mr-3">登录</a>
+      <a href="reg.html">注册</a>
+    </div>
+  </div>
+  <div class="search pull-right mes" onclick="op(this)">
+    <input type="text" placeholder="搜索商品..." style="display:none; padding:5px; margin-top:10px;">
+  </div>
+  <div class="menu clearfix">
+    <ul class="container">
+      <li class="first"><a href="index.html" target="_self">首页</a></li>
+      <li class="active"><a href="news.html" target="_self">在线新闻</a></li>
+      <li><a href="guonei.html" target="_self">漂亮女装</a></li>
+      <li><a href="jinkou.html" target="_self">帅气男装</a></li>
+      <li><a href="remai.html" target="_self">潮流服装</a></li>
+      <li><a href="reg.html" target="_self">注册</a></li>
+    </ul>
+  </div>
+</header>
+
+<script>
+// 搜索框交互（和首页一致）
+function op(ele) {
+  const input = ele.querySelector('input');
+  input.style.display = input.style.display === 'none' ? 'block' : 'none';
+  if (input.style.display === 'block') input.focus();
+}
+
+// 更新购物车数量
+function updateCartCount() {
+  const cart = localStorage.getItem('cart');
+  const count = cart ? JSON.parse(cart).reduce((t, i) => t + i.quantity, 0) : 0;
+  document.getElementById('cartCount').textContent = count;
+}
+</script>
+
+<div class="clearfix"></div>
+<div class="container bod mt-3">
+  
+  <div class="news-detail">
+    <h1 class="news-title" id="newsTitle">加载中...</h1>
+    <div class="news-date" id="newsDate">加载中...</div>
+    <div class="news-content" id="newsContent">
+      <p>正在加载新闻内容...</p>
+    </div>
+  </div>
+</div>
+
+<!-- 底部 -->
+<div class="Footer-wrapper text-center mt-5">
+  <div class="fcr">© 2025 潮牌服饰 版权所有</div>
+</div>
+
+<script>
+// 新闻数据（和原有新闻列表对应）
+const newsData = [
+  {
+    id: 1,
+    title: "风从柯桥来｜疫情下，家居服需求激增",
+    date: "2023.04.15",
+    content: `
+      <p>春节临近，商场年味十足。“去年穿了2个月家居服，今年我得多买2套好看的在家换着穿。”耳边传来这样的对话。</p>
+      <p>许多人提到自己的疫情生活，表示几乎每天都穿睡衣。据柯桥家纺协会统计，2022年柯桥家居服面料销量同比增长35%，其中纯棉、针织类亲肤面料最受欢迎。</p>
+      <p>各大服装品牌也纷纷加码家居服赛道，推出了兼具舒适性和时尚感的家居服系列，从简约基础款到轻奢设计款，满足不同消费者的需求。</p>
+      <p>业内人士表示，后疫情时代，消费者对居家生活品质的要求越来越高，家居服不再只是“睡衣”，而是成为一种生活方式的表达。</p>
+    `
+  },
+  {
+    id: 2,
+    title: "2021春夏女装面料解析（一）",
+    date: "2023.04.15",
+    content: `
+      <p>优雅浪漫的半透明面料彰显柔美的女性气质，是未来春夏的关键品类。随着“时尚、科技、绿色”的不断融合，面料呈现出更加多元化的外观和内涵。</p>
+      <p>### 轻薄透气面料成主流</p>
+      <p>春夏季节，轻薄透气的面料始终是主流选择。今年的趋势中，天丝、莫代尔、亚麻等天然面料占据主导地位，这些面料不仅亲肤透气，还兼具环保属性。</p>
+      <p>### 功能性面料崭露头角</p>
+      <p>防晒、抗菌、速干等功能性面料也成为春夏女装的新亮点。许多品牌将科技融入面料研发，推出了兼具美观和实用的功能性女装。</p>
+      <p>### 可持续面料受关注</p>
+      <p>环保理念深入人心，再生聚酯、有机棉等可持续面料的使用比例大幅提升，越来越多的品牌开始注重供应链的绿色化。</p>
+    `
+  },
+  {
+    id: 3,
+    title: "腿粗可以穿靴子吗？可以",
+    date: "2023.04.15",
+    content: `
+      <p>靴子是我们很多女生冬季必买的一款鞋款，马丁靴、骑士靴、过膝靴、雪地靴、切尔西靴等，有非常多的选择。那么如何选择适合是自己的呢？腿粗的女生又改如何选择呢？</p>
+      <p>### 腿粗女生选靴原则</p>
+      <p>1. 避免紧贴腿型的款式：选择有一定宽松度的靴筒，能修饰腿部线条。</p>
+      <p>2. 优先选尖头/方头：尖头或方头设计能视觉上拉长腿部比例。</p>
+      <p>3. 靴筒高度选对：小腿粗选及膝靴，大腿粗选过膝靴，避开小腿肚最粗的位置。</p>
+      <p>4. 材质选柔软的：软皮、麂皮等柔软材质比硬皮更贴合腿部，不显臃肿。</p>
+      <p>### 推荐款式</p>
+      <p>- 马丁靴：8孔或10孔款式，宽松的靴筒能藏肉，搭配工装裤、牛仔裤都合适。</p>
+      <p>- 切尔西靴：低跟切尔西靴，简约的设计能视觉上显瘦。</p>
+      <p>- 过膝长靴：选择弹力适中的过膝靴，能包裹腿部但不紧绷。</p>
+    `
+  },
+  {
+    id: 4,
+    title: "pick西装外套，显瘦有型百搭款",
+    date: "2023.04.15",
+    content: `
+      <p>今年西装的单品大受欢迎，其中最喜欢的是西装裙子的组合，那么什么样子的西装单品又是最受欢迎的呢，今天来说说廓形西装吧。明星潮人们也都在穿</p>
+      <p>### 廓形西装的优势</p>
+      <p>廓形西装最大的优势就是“藏肉”，宽松的版型能修饰肩宽、腰腹和手臂的肉肉，对各种身材都很友好。</p>
+      <p>### 廓形西装的搭配技巧</p>
+      <p>1. 上宽下窄：搭配紧身裤、短裙，打造沙漏型身材。</p>
+      <p>2. 内搭修身：内搭选择修身的T恤、吊带，避免整体臃肿。</p>
+      <p>3. 腰线是关键：用腰带勾勒腰线，提升比例。</p>
+      <p>4. 下衣失踪：搭配短裤或短裙，露出腿部，显高又显瘦。</p>
+      <p>### 不同风格的廓形西装</p>
+      <p>- 休闲风：搭配卫衣、牛仔裤、小白鞋。</p>
+      <p>- 职场风：搭配衬衫、西裤、高跟鞋。</p>
+      <p>- 甜酷风：搭配吊带裙、马丁靴。</p>
+    `
+  },
+  {
+    id: 5,
+    title: "耐克 Nike Offline 凉拖鞋全新配色登陆",
+    date: "2023.04.15",
+    content: `
+      <p>耐克全新凉拖鞋系列 Nike Offline，继早前的黑橘配色后又一款全新「Army Olive」配色正式公布。</p>
+      <p>这款拖鞋采用了耐克最新的缓震科技，鞋垫采用泡棉材质，提供极致的舒适感，适合日常休闲穿着。</p>
+      <p>「Army Olive」配色以军绿色为主调，搭配黑色细节，整体风格低调又不失质感。鞋身采用一体式设计，轻便且防滑。</p>
+      <p>据悉，该配色将于4月20日正式发售，售价为899元，感兴趣的朋友可以关注耐克官方渠道。</p>
+      <p>除了这款配色，耐克还计划在夏季推出更多清新配色，满足不同消费者的需求。</p>
+    `
+  },
+  {
+    id: 6,
+    title: "新春单品｜走亲访友 羊羔毛外套推荐",
+    date: "2023.04.15",
+    content: `
+      <p>羔毛顾名思义，取自绵羊第一次剪下的羊毛。并且用这种原料纺出来的纱线手感确实优于普通羊毛保暖性能比普通羊毛好，价格也高一些。</p>
+      <p>### 羊羔毛外套的优点</p>
+      <p>1. 保暖性佳：羊羔毛的保暖性能是普通羊毛的1.5倍，适合寒冷的冬季。</p>
+      <p>2. 手感柔软：第一次剪下的羊毛更加细腻柔软，亲肤不扎人。</p>
+      <p>3. 质感高级：羊羔毛自带蓬松感，视觉上温暖又高级。</p>
+      <p>### 推荐款式</p>
+      <p>1. 短款羊羔毛外套：搭配高腰裤、长裙，显高又显瘦，适合小个子。</p>
+      <p>2. 中长款羊羔毛大衣：保暖性更好，搭配打底裤、靴子，大气又时尚。</p>
+      <p>3. 羊羔毛拼接外套：拼接牛仔、皮质的款式，增加设计感，适合甜酷风。</p>
+      <p>### 保养小贴士</p>
+      <p>羊羔毛外套建议干洗，避免水洗导致变形；收纳时悬挂放置，避免挤压。</p>
+    `
+  }
+];
+
+// 获取URL参数中的新闻ID
+function getUrlParam(name) {
+  const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+  const r = window.location.search.substr(1).match(reg);
+  return r ? decodeURIComponent(r[2]) : 1;
+}
+
+// 渲染新闻详情
+window.onload = function() {
+  const newsId = parseInt(getUrlParam('id')) || 1;
+  const news = newsData.find(item => item.id === newsId) || newsData[0];
+  
+  document.getElementById('newsTitle').textContent = news.title;
+  document.getElementById('newsDate').textContent = news.date;
+  document.getElementById('newsContent').innerHTML = news.content;
+  updateCartCount();
+};
+</script>
+</body>
+</html>
